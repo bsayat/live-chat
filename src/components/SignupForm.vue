@@ -8,10 +8,10 @@
     />
     <input type="email" required placeholder="email" v-model="email" />
     <input type="password" required placeholder="password" v-model="password" />
+    <div class="error" v-if="error">{{ error }}</div>
     <button type="submit">Sign up</button>
   </form>
 
-  <div class="error" v-if="error">{{ error }}</div>
 </template>
 
 <script>
@@ -35,13 +35,5 @@ export default {
 };
 </script>
 
-<style scoped>
-.error {
-  display: inline-block;
-  color: #a70000;
-  border: 1px solid #a70000;
-  border-radius: 4px;
-  background-color: #ffbaba;
-  padding: 8px 16px;
-}
+<style>
 </style>
