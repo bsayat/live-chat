@@ -6,6 +6,7 @@
       @keypress.enter.prevent="handlSubmit"
     ></textarea>
   </form>
+  <div v-if="error" class="error">{{ error }}</div>
 </template>
 
 <script>
@@ -18,7 +19,7 @@ export default {
   setup() {
     const message = ref("");
     const { user } = getUser();
-    const { error, addDoc } = useCollection("message")
+    const { error, addDoc } = useCollection("messages");
 
     const handlSubmit = async () => {
       const chat = {
@@ -26,11 +27,14 @@ export default {
         name: user.value.displayName,
         createdAt: timestamp(),
       };
-      console.log(chat);
-      message.value = "";
+      await addDoc(chat);
+
+      if (!error.value) {
+        message.value = "";
+      }
     };
 
-    return { message, handlSubmit };
+    return { message, handlSubmit, error };
   },
 };
 </script>
