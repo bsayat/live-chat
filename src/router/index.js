@@ -6,9 +6,17 @@ import Chatroom from "../views/Chatroom.vue";
 
 const requireAuth = (to, from, next) => {
   let user = projectAuth.currentUser;
-  console.log("current user:", user);
   if (!user) {
     next({ name: "Welcome" });
+  } else {
+    next();
+  }
+}
+
+const requireNoAuth = (to, from, next) => {
+  let user = projectAuth.currentUser;
+  if (user) {
+    next({ name: "Chatroom" });
   } else {
     next();
   }
@@ -19,6 +27,7 @@ const routes = [
     path: "/",
     name: "Welcome",
     component: Welcome,
+    beforeEnter: requireNoAuth
   },
   {
     path: "/chatroom",
